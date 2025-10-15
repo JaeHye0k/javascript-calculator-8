@@ -1,4 +1,5 @@
 import Calculator from "../src/Calculator";
+import { ERROR } from "../src/errorMessages";
 import { mockQuestions } from "./ApplicationTest";
 
 describe("Caculator", () => {
@@ -22,10 +23,46 @@ describe("Caculator", () => {
   });
 
   describe("커스텀 구분자 추출 기능", () => {
-    test("커스텀 구분자 기호(//\n)를 벗겨 구분자만 반환한다.", () => {});
-    test("구분자가 없을 경우 에러를 발생시킨다.", () => {});
-    test("구분자가 여러 문자(abc)인 경우 통째로 하나의 구분자로 취급한다.", () => {});
-    test("커스텀 구분자가 없다면 null을 반환한다.", () => {});
+    test("커스텀 구분자 기호(//\\n)를 벗겨 구분자만 반환한다.", () => {
+      // given: 입력값이 주어짐 (커스텀 구분자 포함)
+      const inputs = ["//;\\n1;2;3"];
+      const expected = [";"];
+      mockQuestions(inputs);
+      jest.spyOn(calc, "extractCustomDelimiter");
+
+      // when: 커스텀 구분자 추출 메서드 호출
+      inputs.forEach((input) => {
+        calc.extractCustomDelimiter(input);
+      });
+
+      // then: 구분자만 반환
+      expected.forEach((e, i) => {
+        expect(calc.extractCustomDelimiter).toHaveNthReturnedWith(i + 1, e);
+      });
+    });
+
+    test("구분자가 빈 문자열일 경우, 에러가 발생한다", () => {
+      // given: 커스텀 구분자가 비어있음
+      const input = "//\\n1,2,3";
+
+      // when: 커스텀 구분자 추출 메서드 호출
+      // then: 에러 발생
+      expect(() => calc.extractCustomDelimiter(input)).toThrow(
+        ERROR.EMPTY_CUSTOM_DELIMITER
+      );
+    });
+
+    test.only("커스텀 구분자를 설정하지 않았다면 null을 반환한다", () => {
+      // given: 입력값이 주어짐 (커스텀 구분자 없음)
+      const input = "1,2,3";
+      const expected = null;
+
+      // when: 커스텀 구분자 추출 메서드 호출
+      const result = calc.extractCustomDelimiter(input);
+
+      // then: null 반환
+      expect(result).toBe(expected);
+    });
   });
 
   describe("숫자 추출 기능", () => {

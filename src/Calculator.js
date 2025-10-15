@@ -1,4 +1,5 @@
 import { Console } from "@woowacourse/mission-utils";
+import { ERROR } from "./errorMessages";
 
 class Calculator {
   constructor() {
@@ -9,6 +10,13 @@ class Calculator {
   async input() {
     const input = await Console.readLineAsync(this.inputPrefix);
     return input;
+  }
+
+  extractCustomDelimiter(input) {
+    const divisor = input.match(/^\/\/(.*)\\n/);
+    if (divisor === null) return null;
+    if (divisor[1] === "") throw Error(ERROR.EMPTY_CUSTOM_DELIMITER);
+    return divisor[1];
   }
 }
 

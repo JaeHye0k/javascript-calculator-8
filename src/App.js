@@ -1,5 +1,11 @@
+import Calculator from "./Calculator.js";
+
 class App {
-  async run() {}
+  run() {
+    const calc = new Calculator();
+    const input = calc.input();
+    const delimiter = calc.extractCustomDelimiter(input);
+  }
 }
 
 export default App;
