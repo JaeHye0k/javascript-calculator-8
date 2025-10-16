@@ -25,8 +25,8 @@ describe("Caculator", () => {
   describe("커스텀 구분자 추출 기능", () => {
     test("커스텀 구분자 기호(//\\n)를 벗겨 구분자만 반환한다.", () => {
       // given: 입력값이 주어짐 (커스텀 구분자 포함)
-      const inputs = ["//;\\n1;2;3"];
-      const expected = [";"];
+      const inputs = ["//;\\n1;2;3", "//  \\n1  2  3"];
+      const expected = [";", "  "];
       mockQuestions(inputs);
       jest.spyOn(calc, "extractCustomDelimiter");
 
