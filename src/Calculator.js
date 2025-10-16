@@ -10,6 +10,7 @@ class Calculator {
 
   async input() {
     const input = await Console.readLineAsync(this.inputPrefix);
+    if (input.trim() === "") return "0";
     return input;
   }
 

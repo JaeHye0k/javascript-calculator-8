@@ -5,12 +5,27 @@ import { mockQuestions } from "./ApplicationTest";
 describe("Caculator", () => {
   const calc = new Calculator();
 
-  describe("입력 기능", () => {
+  describe.only("입력 기능", () => {
     test("사용자로부터 값을 입력받아 반환한다", async () => {
       // given: 입력값이 주어짐
       const inputs = ["1,2,3", "//;\\n1;2;3"];
       mockQuestions(inputs);
       const expected = ["1,2,3", "//;\\n1;2;3"];
+
+      // when: input 메서드 호출
+      const results = await Promise.all([calc.input(), calc.input()]);
+
+      // then: 입력값이 그대로 반환
+      results.forEach((result, i) => {
+        expect(result).toBe(expected[i]);
+      });
+    });
+
+    test("입력값이 빈 문자열일 경우 0을 반환한다.", async () => {
+      // given: 빈 입력값이 주어짐
+      const inputs = ["", "   "];
+      mockQuestions(inputs);
+      const expected = ["0", "0"];
 
       // when: input 메서드 호출
       const results = await Promise.all([calc.input(), calc.input()]);
