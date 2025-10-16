@@ -1,5 +1,5 @@
 import Calculator from "../src/Calculator";
-import { ERROR } from "../src/errorMessages";
+import { ERROR_MESSAGES } from "../src/constants/error";
 import { mockQuestions } from "./ApplicationTest";
 
 describe("Caculator", () => {
@@ -48,7 +48,7 @@ describe("Caculator", () => {
       // when: 커스텀 구분자 추출 메서드 호출
       // then: 에러 발생
       expect(() => calc.extractCustomDelimiter(input)).toThrow(
-        ERROR.EMPTY_CUSTOM_DELIMITER
+        ERROR_MESSAGES.EMPTY_CUSTOM_DELIMITER
       );
     });
 
