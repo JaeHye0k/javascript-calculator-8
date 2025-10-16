@@ -13,6 +13,11 @@ class Calculator {
     return input;
   }
 
+  splitInput(input) {
+    const [_, delimiter, numbers] = input.match(/(^\/\/.*\\n)?(.*)/);
+    return [delimiter, numbers];
+  }
+
   extractCustomDelimiter(input) {
     const delimiter = input.match(/^\/\/(.*)\\n/);
     if (delimiter === null) return null;
