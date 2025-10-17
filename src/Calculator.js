@@ -4,6 +4,7 @@ import {
   isEmptyString,
   isIncludesDot,
   isNumberString,
+  isValidNumber,
 } from "./utils/validator.js";
 
 class Calculator {
@@ -59,6 +60,13 @@ class Calculator {
       return number > Number.MAX_SAFE_INTEGER ? BigInt(number) : Number(number);
     });
     return numbers;
+  }
+
+  validateNumbers(numbers) {
+    if (numbers.every(isValidNumber)) {
+      return numbers;
+    }
+    throw Error(ERROR_MESSAGES.INCLUDES_NAN);
   }
 }
 

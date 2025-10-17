@@ -184,6 +184,24 @@ describe("Caculator", () => {
     });
   });
 
+  describe.only("숫자 검증", () => {
+    test("숫자 이외의 타입인 요소가 포함되어 있을 경우 에러가 발생한다", () => {
+      // given: 숫자 이외의 타입이인 요소가 포함되어 주어짐
+      const numbers = [
+        [NaN, 1],
+        [Infinity, 1],
+      ];
+
+      // when: 숫자 검증 시
+      // then: 에러 발생
+      numbers.forEach((number) => {
+        expect(() => calc.validateNumbers(number)).toThrow(
+        ERROR_MESSAGES.INCLUDES_NAN
+      );
+    });
+  });
+  });
+
   describe("숫자 합산 기능", () => {
     test("배열의 모든 숫자를 더한다", () => {});
 

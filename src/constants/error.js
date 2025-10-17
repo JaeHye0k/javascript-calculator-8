@@ -12,4 +12,5 @@ export const ERROR_MESSAGES = Object.freeze({
   CUSTOM_DELIMITER_INCLUDES_NUMBER: setPrefix(
     "커스텀 구분자는 숫자를 포함할 수 없습니다."
   ),
+  INCLUDES_NAN: setPrefix("숫자 영역은 숫자와 구분자만 포함할 수 있습니다."),
 });
