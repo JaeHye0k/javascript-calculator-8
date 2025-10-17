@@ -99,29 +99,53 @@ describe("Caculator", () => {
       expect(result).toEqual(expect.arrayContaining(expected));
     });
       });
-    });
 
+  describe.only("커스텀 구분자 검증", () => {
     test("구분자가 빈 문자열일 경우, 에러가 발생한다", () => {
-      // given: 커스텀 구분자가 비어있음
-      const input = "//\\n1,2,3";
+      // given: 커스텀 구분자에 빈 문자열이 포함되어 있음
+      const customDelimiters = [""];
 
-      // when: 커스텀 구분자 추출 메서드 호출
+      // when: 커스텀 구분자 검증 시
       // then: 에러 발생
-      expect(() => calc.extractCustomDelimiter(input)).toThrow(
+      expect(() => calc.validateCustomDelimiter(customDelimiters)).toThrow(
         ERROR_MESSAGES.EMPTY_CUSTOM_DELIMITER
       );
     });
 
-    test.only("커스텀 구분자를 설정하지 않았다면 null을 반환한다", () => {
-      // given: 입력값이 주어짐 (커스텀 구분자 없음)
-      const input = "1,2,3";
-      const expected = null;
+    test("커스텀 구분자가 온점('.')이면 에러가 발생한다", () => {
+      // given: 커스텀 구분자에 '.'이 포함되어있음
+      const customDelimiters = ["."];
 
-      // when: 커스텀 구분자 추출 메서드 호출
-      const result = calc.extractCustomDelimiter(input);
+      // when: 커스텀 구붅자 검증 시
+      // then: 에러 발생
+      expect(() => calc.validateCustomDelimiter(customDelimiters)).toThrow(
+        ERROR_MESSAGES.CUSTOM_DELIMITER_INCLUDES_DOT
+      );
+    });
 
-      // then: null 반환
-      expect(result).toBe(expected);
+    test("커스텀 구분자에 숫자가 포함되어있을 경우, 에러가 발생한다", () => {
+      // given: 커스텀 구분자 숫자가 포함되어있음
+      const customDelimiters = ["1"];
+
+      // when: 커스텀 구분자 검증 시
+      // then: 에러 발생
+      expect(() => calc.validateCustomDelimiter(customDelimiters)).toThrow(
+        ERROR_MESSAGES.CUSTOM_DELIMITER_INCLUDES_NUMBER
+      );
+    });
+
+    test("한글, 이모지도 커스텀 문자로 사용할 수 있다", () => {
+      // given: 커스텀 구분자에 한글, 이모지가 포함되어있음
+      const customDelimiters = ["a", "가", "😂"];
+      const expected = ["a", "가", "😂"];
+
+      // when: 커스텀 구분자 검증 시
+      const results = calc.validateCustomDelimiter(customDelimiters);
+
+      // then: 입력된 커스텀 구분자 그대로 반환
+      results.forEach((result, i) => {
+        expect(result).toBe(expected[i]);
+      });
     });
   });
 

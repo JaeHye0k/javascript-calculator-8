@@ -1,5 +1,10 @@
 import { Console } from "@woowacourse/mission-utils";
 import { ERROR_MESSAGES } from "./constants/error.js";
+import {
+  isEmptyString,
+  isIncludesDot,
+  isNumberString,
+} from "./utils/validator.js";
 
 class Calculator {
   constructor() {
@@ -28,6 +33,22 @@ class Calculator {
       return delimiter;
     });
     return delimiters;
+  }
+
+  validateCustomDelimiter(customDelimiters) {
+    if (customDelimiters.some(isEmptyString)) {
+      throw Error(ERROR_MESSAGES.EMPTY_CUSTOM_DELIMITER);
+    }
+
+    if (customDelimiters.some(isIncludesDot)) {
+      throw Error(ERROR_MESSAGES.CUSTOM_DELIMITER_INCLUDES_DOT);
+    }
+
+    if (customDelimiters.some(isNumberString)) {
+      throw Error(ERROR_MESSAGES.CUSTOM_DELIMITER_INCLUDES_NUMBER);
+    }
+
+    return customDelimiters;
   }
 }
 
