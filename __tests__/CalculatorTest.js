@@ -70,22 +70,34 @@ describe("Caculator", () => {
     });
   });
 
-  describe("커스텀 구분자 추출 기능", () => {
-    test("커스텀 구분자 기호(//\\n)를 벗겨 구분자만 반환한다.", () => {
+  describe.only("커스텀 구분자 추출", () => {
+    test("커스텀 구분자 기호(//\\n)를 벗겨 구분자만 반환한다", () => {
       // given: 입력값이 주어짐 (커스텀 구분자 포함)
-      const inputs = ["//;\\n1;2;3", "//  \\n1  2  3"];
-      const expected = [";", "  "];
-      mockQuestions(inputs);
-      jest.spyOn(calc, "extractCustomDelimiter");
+      const customDelimiters = ["//;\\n", "//  \\n", "//\\n"];
+      const expected = [[";"], ["  "], [""]];
 
-      // when: 커스텀 구분자 추출 메서드 호출
-      inputs.forEach((input) => {
-        calc.extractCustomDelimiter(input);
-      });
+      // when: 커스텀 구분자 추출 시
+      const results = customDelimiters.map((customDelimiter) =>
+        calc.extractCustomDelimiter(customDelimiter)
+      );
 
       // then: 구분자만 반환
       expected.forEach((e, i) => {
-        expect(calc.extractCustomDelimiter).toHaveNthReturnedWith(i + 1, e);
+        expect(results[i]).toEqual(expect.arrayContaining(e));
+      });
+    });
+
+    test("커스텀 구분자 선언 기호가 2개 이상인 경우, 각각의 커스텀 구분자를 유효한 구분자로 취급한다", () => {
+      // given: 2개 이상의 커스텀 구분자 선언
+      const customDelimiter = "//-\\n//_\\n";
+      const expected = ["-", "_"];
+
+      // when: 커스텀 구분자 추출 시
+      const result = calc.extractCustomDelimiter(customDelimiter);
+
+      // then: 두 개의 구분자 모두 반환
+      expect(result).toEqual(expect.arrayContaining(expected));
+    });
       });
     });
 

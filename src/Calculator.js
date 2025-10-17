@@ -19,11 +19,15 @@ class Calculator {
     return [delimiter, numbers];
   }
 
-  extractCustomDelimiter(input) {
-    const delimiter = input.match(/^\/\/(.*)\\n/);
-    if (delimiter === null) return null;
-    if (delimiter[1] === "") throw Error(ERROR_MESSAGES.EMPTY_CUSTOM_DELIMITER);
-    return delimiter[1];
+  extractCustomDelimiter(customDelimiter) {
+    const rawDelimiters = customDelimiter.match(/(\/\/.*?\\n)/g);
+    const delimiters = rawDelimiters.map((rawDelimiter) => {
+      const { delimiter } = rawDelimiter.match(
+        /\/\/(?<delimiter>.*)\\n/
+      ).groups;
+      return delimiter;
+    });
+    return delimiters;
   }
 }
 
