@@ -10,7 +10,7 @@ class Calculator {
   constructor() {
     this.inputPrefix = "덧셈할 문자열을 입력해 주세요.\n";
     this.outputPrefix = "결과 : ";
-    this.delimiters = [",", ":"];
+    this.defaultDelimiters = [",", ":"];
   }
 
   async input() {
@@ -49,6 +49,16 @@ class Calculator {
     }
 
     return customDelimiters;
+  }
+
+  extractNumbers(numberString, customDelimiters = []) {
+    const delimiters = [...this.defaultDelimiters, ...customDelimiters];
+    delimiters.sort((a, b) => b.length - a.length);
+    const splited = numberString.split(RegExp(delimiters.join("|")));
+    const numbers = splited.map((number) => {
+      return number > Number.MAX_SAFE_INTEGER ? BigInt(number) : Number(number);
+    });
+    return numbers;
   }
 }
 

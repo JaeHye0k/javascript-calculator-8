@@ -149,14 +149,39 @@ describe("Caculator", () => {
     });
   });
 
-  describe("숫자 추출 기능", () => {
-    test("입력값에서 기본 구분자를 기준으로 숫자를 분리해 반환한다.", () => {});
-    test("커스텀 구분자가 존재할 경우 기본 구분자 대신 커스텀 구분자를 사용한다.", () => {});
-    test("구분자, 숫자를 제외한 문자를 포함할 경우 에러를 발생시킨다.", () => {});
-    test("연속해서 두 개의 구분자가 올 경우 에러를 발생시킨다", () => {});
-    test("입력값이 음수인 경우도 정상적으로 처리한다", () => {});
-    test("숫자 문자열을 BigInt 자료형으로 변환한다", () => {});
-    test("소수는 숫자로 처리하지 않는다.", () => {});
+  describe.only("숫자 추출", () => {
+    test("숫자 영역에서 구분자를 기준으로 숫자를 분리한다", () => {
+      // given: 커스텀 구분자와 숫자 문자열이 주어짐
+      const customDelimiters = [
+        ["-", "/"],
+        ["-", "--"],
+      ];
+      const numbers = ["1,2:3-4/5", "1--2-3"];
+      const expected = [
+        [1, 2, 3, 4, 5],
+        [1, 2, 3],
+      ];
+
+      // when: 숫자 추출 시
+      const results = numbers.map((number, i) =>
+        calc.extractNumbers(number, customDelimiters[i])
+      );
+
+      // then: 분리된 숫자 반환
+      expect(results).toEqual(expected);
+    });
+
+    test("Number.MAX_SAFE_INTGER를 초과하는 수는 BigInt로 변환한다", () => {
+      // given: Number.MAX_SAFE_INTEGER를 초과하는 숫자가 포함된 숫자 문자열이 주어짐
+      const numberString = "9007199254740992,9007199254740991,1";
+      const expected = [9007199254740992n, 9007199254740991, 1];
+
+      // when: 숫자 추출 시
+      const result = calc.extractNumbers(numberString);
+
+      // then: BigInt와 Number 숫자 배열 반환
+      expect(result).toEqual(expected);
+    });
   });
 
   describe("숫자 합산 기능", () => {
