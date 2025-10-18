@@ -6,7 +6,9 @@ import {
   isFloat,
   isIncludesDot,
   isNumberString,
-  isValidNumber,
+  isNumber,
+  isBigInt,
+  isMinus,
 } from "./utils/validator.js";
 
 class Calculator {
@@ -63,7 +65,8 @@ class Calculator {
   }
 
   validateNumbers(numbers) {
-    if (numbers.every(isValidNumber)) {
+    if (numbers.some(isMinus)) throw Error(ERROR_MESSAGES.INCLUDES_MINUS);
+    if (numbers.every((e) => isNumber(e) || isBigInt(e))) {
       return numbers;
     }
     throw Error(ERROR_MESSAGES.INCLUDES_NAN);

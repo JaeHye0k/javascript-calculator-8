@@ -201,6 +201,17 @@ describe("Caculator", () => {
         );
       });
     });
+
+    test("음수가 포함되어 있을 경우 에러가 발생한다", () => {
+      // given: 음수가 포함된 숫자가 주어짐
+      const numbers = [-1, 1];
+
+      // when: 숫자 검증 시
+      // then: 에러 발생
+      expect(() => calc.validateNumbers(numbers)).toThrow(
+        ERROR_MESSAGES.INCLUDES_MINUS
+      );
+    });
   });
 
   describe("숫자 합산", () => {
