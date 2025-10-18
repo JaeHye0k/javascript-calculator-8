@@ -95,6 +95,14 @@ class Calculator {
 
     return (a * multiple + b * multiple) / multiple;
   }
+
+  print(result) {
+    const { int, decimal } = result;
+
+    const output =
+      decimal > 0 ? `${int}.${decimal.toString().split(".")[1]}` : `${int}`;
+    Console.print(this.outputPrefix + output);
+  }
 }
 
 export default Calculator;

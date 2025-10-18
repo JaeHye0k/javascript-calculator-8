@@ -10,7 +10,7 @@ export const mockQuestions = (inputs) => {
   });
 };
 
-const getLogSpy = () => {
+export const getLogSpy = () => {
   const logSpy = jest.spyOn(MissionUtils.Console, "print");
   logSpy.mockClear();
   return logSpy;

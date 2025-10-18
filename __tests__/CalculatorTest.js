@@ -1,6 +1,6 @@
 import Calculator from "../src/Calculator";
 import { ERROR_MESSAGES } from "../src/constants/error";
-import { mockQuestions } from "./ApplicationTest";
+import { getLogSpy, mockQuestions } from "./ApplicationTest";
 
 describe("Caculator", () => {
   const calc = new Calculator();
@@ -98,7 +98,7 @@ describe("Caculator", () => {
       // then: 두 개의 구분자 모두 반환
       expect(result).toEqual(expect.arrayContaining(expected));
     });
-      });
+  });
 
   describe.only("커스텀 구분자 검증", () => {
     test("구분자가 빈 문자열일 경우, 에러가 발생한다", () => {
@@ -196,10 +196,10 @@ describe("Caculator", () => {
       // then: 에러 발생
       numbers.forEach((number) => {
         expect(() => calc.validateNumbers(number)).toThrow(
-        ERROR_MESSAGES.INCLUDES_NAN
-      );
+          ERROR_MESSAGES.INCLUDES_NAN
+        );
+      });
     });
-  });
   });
 
   describe.only("숫자 합산", () => {
@@ -248,7 +248,22 @@ describe("Caculator", () => {
       expect(result).toEqual(expected);
     });
   });
-  describe("출력 기능", () => {
-    test("합산한 숫자를 `Console.print()`를 사용해 출력한다.", () => {});
+
+  describe.only("출력 기능", () => {
+    test("합산한 숫자를 `Console.print()`를 사용해 출력한다", () => {
+      // given: 정수부와 소수부로 구분된 숫자가 주어짐
+      const result = {
+        int: 9007199254740993n,
+        decimal: 0.3,
+      };
+      const expected = "결과 : 9007199254740993.3";
+      const logSpy = getLogSpy();
+
+      // when: 출력 시
+      calc.print(result);
+
+      // then: 정수부와 소수부가 합쳐져 출력됨
+      expect(logSpy).toHaveBeenCalledWith(expected);
+    });
   });
 });
