@@ -6,7 +6,7 @@ import { getLogSpy, mockQuestions } from "./ApplicationTest";
 describe("Caculator", () => {
   const calc = new Calculator();
 
-  describe.only("입력 기능", () => {
+  describe("입력 기능", () => {
     test("사용자로부터 값을 입력받아 반환한다", async () => {
       // given: 입력값이 주어짐
       const inputs = ["1,2,3", "//;\\n1;2;3"];
@@ -38,7 +38,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("분리", () => {
+  describe("분리", () => {
     test("커스텀 구분자 영역과 숫자 영역을 분리한다", () => {
       // given: 커스텀 구분자가 설정된 입력 원문이 주어짐
       const input = ["//-\\n1-2-3", "//;;\\n//-\\n1;;2-3"];
@@ -71,7 +71,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("커스텀 구분자 추출", () => {
+  describe("커스텀 구분자 추출", () => {
     test("커스텀 구분자 기호(//\\n)를 벗겨 구분자만 반환한다", () => {
       // given: 입력값이 주어짐 (커스텀 구분자 포함)
       const customDelimiters = ["//;\\n", "//  \\n", "//\\n"];
@@ -101,7 +101,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("커스텀 구분자 검증", () => {
+  describe("커스텀 구분자 검증", () => {
     test("구분자가 빈 문자열일 경우, 에러가 발생한다", () => {
       // given: 커스텀 구분자에 빈 문자열이 포함되어 있음
       const customDelimiters = [""];
@@ -150,7 +150,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("숫자 추출", () => {
+  describe("숫자 추출", () => {
     test("숫자 영역에서 구분자를 기준으로 숫자를 분리한다", () => {
       // given: 커스텀 구분자와 숫자 문자열이 주어짐
       const customDelimiters = [
@@ -185,7 +185,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("숫자 검증", () => {
+  describe("숫자 검증", () => {
     test("숫자 이외의 타입인 요소가 포함되어 있을 경우 에러가 발생한다", () => {
       // given: 숫자 이외의 타입이인 요소가 포함되어 주어짐
       const numbers = [
@@ -203,7 +203,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("숫자 합산", () => {
+  describe("숫자 합산", () => {
     test("배열의 모든 숫자를 더한다", () => {
       // given: 숫자 배열이 주어짐
       const numbers = [1, 2, 3];
@@ -250,7 +250,7 @@ describe("Caculator", () => {
     });
   });
 
-  describe.only("출력 기능", () => {
+  describe("출력 기능", () => {
     test("합산한 숫자를 `Console.print()`를 사용해 출력한다", () => {
       // given: 정수부와 소수부로 구분된 숫자가 주어짐
       const result = {
