@@ -1,5 +1,6 @@
 import Calculator from "../src/Calculator";
 import { ERROR_MESSAGES } from "../src/constants/error";
+import { PREFIX } from "../src/constants/prefix";
 import { getLogSpy, mockQuestions } from "./ApplicationTest";
 
 describe("Caculator", () => {
@@ -256,7 +257,7 @@ describe("Caculator", () => {
         int: 9007199254740993n,
         decimal: 0.3,
       };
-      const expected = "결과 : 9007199254740993.3";
+      const expected = PREFIX.OUTPUT + "9007199254740993.3";
       const logSpy = getLogSpy();
 
       // when: 출력 시

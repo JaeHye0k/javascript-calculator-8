@@ -1,5 +1,6 @@
 import { Console } from "@woowacourse/mission-utils";
 import { ERROR_MESSAGES } from "./constants/error.js";
+import { PREFIX } from "./constants/prefix.js";
 import {
   isEmptyString,
   isFloat,
@@ -10,13 +11,11 @@ import {
 
 class Calculator {
   constructor() {
-    this.inputPrefix = "덧셈할 문자열을 입력해 주세요.\n";
-    this.outputPrefix = "결과 : ";
     this.defaultDelimiters = [",", ":"];
   }
 
   async input() {
-    const input = await Console.readLineAsync(this.inputPrefix);
+    const input = await Console.readLineAsync(PREFIX.INPUT);
     if (input.trim() === "") return "0";
     return input;
   }
@@ -101,7 +100,7 @@ class Calculator {
 
     const output =
       decimal > 0 ? `${int}.${decimal.toString().split(".")[1]}` : `${int}`;
-    Console.print(this.outputPrefix + output);
+    Console.print(PREFIX.OUTPUT + output);
   }
 }
 
