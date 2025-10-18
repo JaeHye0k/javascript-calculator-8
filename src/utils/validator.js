@@ -17,3 +17,7 @@ export function isValidNumber(number) {
   if (typeof number === "bigint") return true;
   return false;
 }
+
+export function isFloat(number) {
+  return Number(number) === number && number % 1 !== 0;
+}

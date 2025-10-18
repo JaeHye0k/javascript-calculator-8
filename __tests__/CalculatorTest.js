@@ -202,12 +202,52 @@ describe("Caculator", () => {
   });
   });
 
-  describe("숫자 합산 기능", () => {
-    test("배열의 모든 숫자를 더한다", () => {});
+  describe.only("숫자 합산", () => {
+    test("배열의 모든 숫자를 더한다", () => {
+      // given: 숫자 배열이 주어짐
+      const numbers = [1, 2, 3];
+      const expected = {
+        int: 6n,
+        decimal: 0,
+      };
 
-    test("더할 숫자가 없을 경우 0을 반환한다.", () => {});
+      // when: 합산 시
+      const result = calc.sum(numbers);
+
+      // then: 합 반환
+      expect(result).toEqual(expected);
+    });
+
+    test("부동소수점 오차 없는 소수 계산을 한다", () => {
+      // given: 2진수로 변환했을 때 순환 소수가 되는 수를 포함한 소수가 주어짐
+      const numbers = [0.1, 0.2];
+      const expected = {
+        int: 0n,
+        decimal: 0.3,
+      };
+
+      // when: 합산 시
+      const result = calc.sum(numbers);
+
+      // then: 정확히 계산됨
+      expect(result).toEqual(expected);
+    });
+
+    test("MAX_SAFE_INTEGER를 초과하는 숫자도 정확히 계산한다", () => {
+      // given: MAX_SAFE_INTEGER를 초과하는 수, 소수가 함께 주어짐
+      const numbers = [9007199254740992n, 1, 0.1, 0.2];
+      const expected = {
+        int: 9007199254740993n,
+        decimal: 0.3,
+      };
+
+      // when: 합산 시
+      const result = calc.sum(numbers);
+
+      // then: 정수부, 소수부 모두 올바른 결과 출력
+      expect(result).toEqual(expected);
+    });
   });
-  describe("예외 처리 기능", () => {});
   describe("출력 기능", () => {
     test("합산한 숫자를 `Console.print()`를 사용해 출력한다.", () => {});
   });

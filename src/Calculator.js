@@ -2,6 +2,7 @@ import { Console } from "@woowacourse/mission-utils";
 import { ERROR_MESSAGES } from "./constants/error.js";
 import {
   isEmptyString,
+  isFloat,
   isIncludesDot,
   isNumberString,
   isValidNumber,
@@ -67,6 +68,32 @@ class Calculator {
       return numbers;
     }
     throw Error(ERROR_MESSAGES.INCLUDES_NAN);
+  }
+
+  sum(numbers) {
+    let decimalSum = 0;
+    let bigintSum = 0n;
+
+    numbers.forEach((number) => {
+      if (isFloat(number)) decimalSum = this.add(decimalSum, number);
+      else if (typeof number === "bigint" || typeof number === "number")
+        bigintSum += BigInt(number);
+    });
+
+    return {
+      int: bigintSum,
+      decimal: decimalSum,
+    };
+  }
+
+  add(a, b) {
+    const aDecimal = (a.toString().split(".")[1] || "").length;
+    const bDecimal = (b.toString().split(".")[1] || "").length;
+    const maxDecimal = Math.max(aDecimal, bDecimal);
+
+    const multiple = Math.pow(10, maxDecimal);
+
+    return (a * multiple + b * multiple) / multiple;
   }
 }
 
