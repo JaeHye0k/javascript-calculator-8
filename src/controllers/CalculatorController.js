@@ -9,12 +9,11 @@ class CalculatorController {
 
     let customDelimiters;
     if (rawCustomDelimiter) {
-      customDelimiters = calc.extractCustomDelimiter(rawCustomDelimiter);
+      customDelimiters = InputParser.extractDelimiter(rawCustomDelimiter);
       customDelimiters = calc.validateCustomDelimiter(customDelimiters);
     }
 
-    let numbers;
-    numbers = calc.extractNumbers(rawNumbers, customDelimiters);
+    let numbers = InputParser.extractNumbers(rawNumbers, customDelimiters);
     numbers = calc.validateNumbers(numbers);
 
     const { int, decimal } = calc.sum(numbers);

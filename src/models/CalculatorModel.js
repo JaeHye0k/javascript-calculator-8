@@ -10,21 +10,6 @@ import {
 } from "../utils/validator.js";
 
 class CalculatorModel {
-  constructor() {
-    this.defaultDelimiters = [",", ":"];
-  }
-
-  extractCustomDelimiter(customDelimiter) {
-    const rawDelimiters = customDelimiter.match(/(\/\/.*?\\n)/g);
-    const delimiters = rawDelimiters.map((rawDelimiter) => {
-      const { delimiter } = rawDelimiter.match(
-        /\/\/(?<delimiter>.*)\\n/
-      ).groups;
-      return delimiter;
-    });
-    return delimiters;
-  }
-
   validateCustomDelimiter(customDelimiters) {
     if (customDelimiters.some(isEmptyString)) {
       throw Error(ERROR_MESSAGES.EMPTY_CUSTOM_DELIMITER);
@@ -39,16 +24,6 @@ class CalculatorModel {
     }
 
     return customDelimiters;
-  }
-
-  extractNumbers(numberString, customDelimiters = []) {
-    const delimiters = [...this.defaultDelimiters, ...customDelimiters];
-    delimiters.sort((a, b) => b.length - a.length);
-    const splited = numberString.split(RegExp(delimiters.join("|")));
-    const numbers = splited.map((number) => {
-      return number > Number.MAX_SAFE_INTEGER ? BigInt(number) : Number(number);
-    });
-    return numbers;
   }
 
   validateNumbers(numbers) {
