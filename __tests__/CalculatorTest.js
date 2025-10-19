@@ -1,7 +1,8 @@
 import CalculatorModel from "../src/models/CalculatorModel";
 import { ERROR_MESSAGES } from "../src/constants/error";
 import CalculatorView from "../src/views/CalculatorView";
-import { getLogSpy, mockQuestions } from "./ApplicationTest";
+import { mockQuestions } from "./ApplicationTest";
+import CalculatorController from "../src/controllers/CalculatorController";
 
 describe("Caculator", () => {
   const calc = new CalculatorModel();
@@ -54,7 +55,7 @@ describe("Caculator", () => {
       ];
 
       // when: 분리 시
-      const results = input.map(CalculatorView.splitInput);
+      const results = input.map(CalculatorController.parseInput);
 
       // then: 커스텀 구분자 영역과, 숫자 영역으로 분리
       results.forEach((result, i) => {
@@ -69,7 +70,7 @@ describe("Caculator", () => {
       const expected = "1,2,3";
 
       // when: 분리 시
-      const result = CalculatorView.splitInput(input);
+      const result = CalculatorController.parseInput(input);
 
       // then: undefined 와 숫자 영역으로 분리
       expect(result[0]).toBeUndefined();
@@ -270,18 +271,15 @@ describe("Caculator", () => {
   describe("출력 기능", () => {
     test("합산한 숫자를 `Console.print()`를 사용해 출력한다", () => {
       // given: 정수부와 소수부로 구분된 숫자가 주어짐
-      const result = {
-        int: 9007199254740993n,
-        decimal: 0.3,
-      };
-      const expected = CalculatorView.OUTPUT_PREFIX + "9007199254740993.3";
-      const logSpy = getLogSpy();
+      const int = 9007199254740993n;
+      const decimal = 0.3;
+      const expected = "9007199254740993.3";
 
       // when: 출력 시
-      CalculatorView.print(result);
+      const result = CalculatorController.parseOutput(int, decimal);
 
       // then: 정수부와 소수부가 합쳐져 출력됨
-      expect(logSpy).toHaveBeenCalledWith(expected);
+      expect(result).toBe(expected);
     });
   });
 });

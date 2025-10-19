@@ -10,16 +10,7 @@ class CalculatorView {
     return input;
   }
 
-  static splitInput(input) {
-    const [_, delimiter, numbers] = input.match(/(^\/\/.*\\n)?(.*)/);
-    return [delimiter, numbers];
-  }
-
-  static print(result) {
-    const { int, decimal } = result;
-
-    const output =
-      decimal > 0 ? `${int}.${decimal.toString().split(".")[1]}` : `${int}`;
+  static print(output) {
     Console.print(CalculatorView.OUTPUT_PREFIX + output);
   }
 }
