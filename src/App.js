@@ -1,10 +1,11 @@
 import Calculator from "./Calculator.js";
+import CalculatorView from "./views/CalculatorView.js";
 
 class App {
   async run() {
     const calc = new Calculator();
-    const input = await calc.input();
-    const [rawCustomDelimiter, rawNumbers] = calc.splitInput(input);
+    const input = await CalculatorView.input();
+    const [rawCustomDelimiter, rawNumbers] = CalculatorView.splitInput(input);
 
     let customDelimiters;
     if (rawCustomDelimiter) {
@@ -18,7 +19,7 @@ class App {
 
     const result = calc.sum(numbers);
 
-    calc.print(result);
+    CalculatorView.print(result);
   }
 }
 

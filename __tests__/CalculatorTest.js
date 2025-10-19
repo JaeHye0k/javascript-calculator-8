@@ -1,6 +1,6 @@
 import Calculator from "../src/Calculator";
 import { ERROR_MESSAGES } from "../src/constants/error";
-import { PREFIX } from "../src/constants/prefix";
+import CalculatorView from "../src/views/CalculatorView";
 import { getLogSpy, mockQuestions } from "./ApplicationTest";
 
 describe("Caculator", () => {
@@ -14,7 +14,10 @@ describe("Caculator", () => {
       const expected = ["1,2,3", "//;\\n1;2;3"];
 
       // when: input 메서드 호출
-      const results = await Promise.all([calc.input(), calc.input()]);
+      const results = await Promise.all([
+        CalculatorView.input(),
+        CalculatorView.input(),
+      ]);
 
       // then: 입력값이 그대로 반환
       results.forEach((result, i) => {
@@ -29,7 +32,10 @@ describe("Caculator", () => {
       const expected = ["0", "0"];
 
       // when: input 메서드 호출
-      const results = await Promise.all([calc.input(), calc.input()]);
+      const results = await Promise.all([
+        CalculatorView.input(),
+        CalculatorView.input(),
+      ]);
 
       // then: 입력값이 그대로 반환
       results.forEach((result, i) => {
@@ -48,7 +54,7 @@ describe("Caculator", () => {
       ];
 
       // when: 분리 시
-      const results = input.map(calc.splitInput);
+      const results = input.map(CalculatorView.splitInput);
 
       // then: 커스텀 구분자 영역과, 숫자 영역으로 분리
       results.forEach((result, i) => {
@@ -63,7 +69,7 @@ describe("Caculator", () => {
       const expected = "1,2,3";
 
       // when: 분리 시
-      const result = calc.splitInput(input);
+      const result = CalculatorView.splitInput(input);
 
       // then: undefined 와 숫자 영역으로 분리
       expect(result[0]).toBeUndefined();
@@ -268,11 +274,11 @@ describe("Caculator", () => {
         int: 9007199254740993n,
         decimal: 0.3,
       };
-      const expected = PREFIX.OUTPUT + "9007199254740993.3";
+      const expected = CalculatorView.OUTPUT_PREFIX + "9007199254740993.3";
       const logSpy = getLogSpy();
 
       // when: 출력 시
-      calc.print(result);
+      CalculatorView.print(result);
 
       // then: 정수부와 소수부가 합쳐져 출력됨
       expect(logSpy).toHaveBeenCalledWith(expected);

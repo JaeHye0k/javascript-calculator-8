@@ -1,6 +1,4 @@
-import { Console } from "@woowacourse/mission-utils";
 import { ERROR_MESSAGES } from "./constants/error.js";
-import { PREFIX } from "./constants/prefix.js";
 import {
   isEmptyString,
   isFloat,
@@ -14,17 +12,6 @@ import {
 class Calculator {
   constructor() {
     this.defaultDelimiters = [",", ":"];
-  }
-
-  async input() {
-    const input = await Console.readLineAsync(PREFIX.INPUT);
-    if (input.trim() === "") return "0";
-    return input;
-  }
-
-  splitInput(input) {
-    const [_, delimiter, numbers] = input.match(/(^\/\/.*\\n)?(.*)/);
-    return [delimiter, numbers];
   }
 
   extractCustomDelimiter(customDelimiter) {
@@ -96,14 +83,6 @@ class Calculator {
     const multiple = Math.pow(10, maxDecimal);
 
     return (a * multiple + b * multiple) / multiple;
-  }
-
-  print(result) {
-    const { int, decimal } = result;
-
-    const output =
-      decimal > 0 ? `${int}.${decimal.toString().split(".")[1]}` : `${int}`;
-    Console.print(PREFIX.OUTPUT + output);
   }
 }
 
