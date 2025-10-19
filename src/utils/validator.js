@@ -28,7 +28,3 @@ export function isMinus(number) {
 export function isFloat(number) {
   return Number(number) === number && number % 1 !== 0;
 }
-
-export function isEmpty(string) {
-  return string.trim() === "";
-}

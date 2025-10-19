@@ -1,13 +1,11 @@
 import CalculatorModel from "../models/CalculatorModel.js";
-import { isEmpty } from "../utils/validator.js";
+import InputParser from "../utils/InputParser.js";
+import OutputFormatter from "../utils/OutputFormatter.js";
 
 class CalculatorController {
   static sum(input) {
-    if (isEmpty(input)) return "0";
-
     const calc = new CalculatorModel();
-    const [rawCustomDelimiter, rawNumbers] =
-      CalculatorController.parseInput(input);
+    const [rawCustomDelimiter, rawNumbers] = InputParser.parse(input);
 
     let customDelimiters;
     if (rawCustomDelimiter) {
@@ -20,20 +18,8 @@ class CalculatorController {
     numbers = calc.validateNumbers(numbers);
 
     const { int, decimal } = calc.sum(numbers);
-    const output = CalculatorController.parseOutput(int, decimal);
+    const output = OutputFormatter.format(int, decimal);
 
-    return output;
-  }
-
-  static parseInput(input) {
-    const [_, rawCustomDelimiter, rawNumbers] =
-      input.match(/(^\/\/.*\\n)?(.*)/);
-    return [rawCustomDelimiter, rawNumbers];
-  }
-
-  static parseOutput(int, decimal) {
-    const output =
-      decimal > 0 ? `${int}.${decimal.toString().split(".")[1]}` : `${int}`;
     return output;
   }
 }

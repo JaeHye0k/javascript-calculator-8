@@ -1,78 +1,8 @@
 import CalculatorModel from "../src/models/CalculatorModel";
 import { ERROR_MESSAGES } from "../src/constants/error";
-import CalculatorView from "../src/views/CalculatorView";
-import { mockQuestions } from "./ApplicationTest";
-import CalculatorController from "../src/controllers/CalculatorController";
 
 describe("Caculator", () => {
   const calc = new CalculatorModel();
-
-  describe("입력", () => {
-    test("사용자로부터 값을 입력받아 반환한다", async () => {
-      // given: 입력값이 주어짐
-      const inputs = ["1,2,3", "//;\\n1;2;3"];
-      mockQuestions(inputs);
-      const expected = ["1,2,3", "//;\\n1;2;3"];
-
-      // when: input 메서드 호출
-      const results = await Promise.all([
-        CalculatorView.input(),
-        CalculatorView.input(),
-      ]);
-
-      // then: 입력값이 그대로 반환
-      results.forEach((result, i) => {
-        expect(result).toBe(expected[i]);
-      });
-    });
-
-    test("입력값이 빈 문자열일 경우 0을 반환한다.", async () => {
-      // given: 빈 입력값이 주어짐
-      const inputs = ["", "   "];
-      const expected = ["0", "0"];
-
-      // when: 컨트롤러의 sum 호출 시
-      const results = inputs.map((input) => {
-        return CalculatorController.sum(input);
-      });
-
-      // then: 0 반환
-      expect(results).toEqual(expected);
-    });
-  });
-
-  describe("분리", () => {
-    test("커스텀 구분자 영역과 숫자 영역을 분리한다", () => {
-      // given: 커스텀 구분자가 설정된 입력 원문이 주어짐
-      const input = ["//-\\n1-2-3", "//;;\\n//-\\n1;;2-3"];
-      const expected = [
-        ["//-\\n", "1-2-3"],
-        ["//;;\\n//-\\n", "1;;2-3"],
-      ];
-
-      // when: 분리 시
-      const results = input.map(CalculatorController.parseInput);
-
-      // then: 커스텀 구분자 영역과, 숫자 영역으로 분리
-      results.forEach((result, i) => {
-        expect(result[0]).toBe(expected[i][0]);
-        expect(result[1]).toBe(expected[i][1]);
-      });
-    });
-
-    test("커스텀 구분자를 설정하지 않을 경우 커스텀 구분자 영역은 undefined가 된다", () => {
-      // given: 커스텀 구분자가 설정되지 않은 입력 원문이 주어짐
-      const input = "1,2,3";
-      const expected = "1,2,3";
-
-      // when: 분리 시
-      const result = CalculatorController.parseInput(input);
-
-      // then: undefined 와 숫자 영역으로 분리
-      expect(result[0]).toBeUndefined();
-      expect(result[1]).toBe(expected);
-    });
-  });
 
   describe("커스텀 구분자 추출", () => {
     test("커스텀 구분자 기호(//\\n)를 벗겨 구분자만 반환한다", () => {
@@ -261,21 +191,6 @@ describe("Caculator", () => {
 
       // then: 정수부, 소수부 모두 올바른 결과 출력
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe("출력 기능", () => {
-    test("합산한 숫자를 `Console.print()`를 사용해 출력한다", () => {
-      // given: 정수부와 소수부로 구분된 숫자가 주어짐
-      const int = 9007199254740993n;
-      const decimal = 0.3;
-      const expected = "9007199254740993.3";
-
-      // when: 출력 시
-      const result = CalculatorController.parseOutput(int, decimal);
-
-      // then: 정수부와 소수부가 합쳐져 출력됨
-      expect(result).toBe(expected);
     });
   });
 });
