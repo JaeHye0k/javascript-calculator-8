@@ -73,3 +73,10 @@
 ### 8. 출력
 
     - [x] 합산한 숫자를 `Console.print()`를 사용해 출력한다.
+
+## ⚙️ 리팩토링 계획
+
+- Model, View, Controller 구조로 변경
+  - Model: 계산기 핵심 비즈니스 로직
+  - View: 사용자와 직접 상호작용하는 로직(입력, 출력)
+  - Controller: Model과 View를 연결
