@@ -1,10 +1,10 @@
-import Calculator from "../src/Calculator";
+import CalculatorModel from "../src/models/CalculatorModel";
 import { ERROR_MESSAGES } from "../src/constants/error";
 import CalculatorView from "../src/views/CalculatorView";
 import { getLogSpy, mockQuestions } from "./ApplicationTest";
 
 describe("Caculator", () => {
-  const calc = new Calculator();
+  const calc = new CalculatorModel();
 
   describe("입력 기능", () => {
     test("사용자로부터 값을 입력받아 반환한다", async () => {

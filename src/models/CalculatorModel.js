@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "./constants/error.js";
+import { ERROR_MESSAGES } from "../constants/error.js";
 import {
   isEmptyString,
   isFloat,
@@ -7,9 +7,9 @@ import {
   isNumber,
   isBigInt,
   isMinus,
-} from "./utils/validator.js";
+} from "../utils/validator.js";
 
-class Calculator {
+class CalculatorModel {
   constructor() {
     this.defaultDelimiters = [",", ":"];
   }
@@ -86,4 +86,4 @@ class Calculator {
   }
 }
 
-export default Calculator;
+export default CalculatorModel;

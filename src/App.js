@@ -1,9 +1,9 @@
-import Calculator from "./Calculator.js";
+import CalculatorModel from "./models/CalculatorModel.js";
 import CalculatorView from "./views/CalculatorView.js";
 
 class App {
   async run() {
-    const calc = new Calculator();
+    const calc = new CalculatorModel();
     const input = await CalculatorView.input();
     const [rawCustomDelimiter, rawNumbers] = CalculatorView.splitInput(input);
 
