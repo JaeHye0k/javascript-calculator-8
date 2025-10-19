@@ -13,7 +13,7 @@ class CalculatorController {
     }
 
     let numbers;
-    numbers = calc.extractNumbers(rawNumbers);
+    numbers = calc.extractNumbers(rawNumbers, customDelimiters);
     numbers = calc.validateNumbers(numbers);
 
     const { int, decimal } = calc.sum(numbers);
