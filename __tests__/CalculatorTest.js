@@ -7,7 +7,7 @@ import CalculatorController from "../src/controllers/CalculatorController";
 describe("Caculator", () => {
   const calc = new CalculatorModel();
 
-  describe("입력 기능", () => {
+  describe("입력", () => {
     test("사용자로부터 값을 입력받아 반환한다", async () => {
       // given: 입력값이 주어짐
       const inputs = ["1,2,3", "//;\\n1;2;3"];
@@ -29,19 +29,15 @@ describe("Caculator", () => {
     test("입력값이 빈 문자열일 경우 0을 반환한다.", async () => {
       // given: 빈 입력값이 주어짐
       const inputs = ["", "   "];
-      mockQuestions(inputs);
       const expected = ["0", "0"];
 
-      // when: input 메서드 호출
-      const results = await Promise.all([
-        CalculatorView.input(),
-        CalculatorView.input(),
-      ]);
-
-      // then: 입력값이 그대로 반환
-      results.forEach((result, i) => {
-        expect(result).toBe(expected[i]);
+      // when: 컨트롤러의 sum 호출 시
+      const results = inputs.map((input) => {
+        return CalculatorController.sum(input);
       });
+
+      // then: 0 반환
+      expect(results).toEqual(expected);
     });
   });
 

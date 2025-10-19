@@ -1,7 +1,10 @@
 import CalculatorModel from "../models/CalculatorModel.js";
+import { isEmpty } from "../utils/validator.js";
 
 class CalculatorController {
   static sum(input) {
+    if (isEmpty(input)) return "0";
+
     const calc = new CalculatorModel();
     const [rawCustomDelimiter, rawNumbers] =
       CalculatorController.parseInput(input);

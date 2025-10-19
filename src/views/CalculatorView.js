@@ -6,7 +6,6 @@ class CalculatorView {
 
   static async input() {
     const input = await Console.readLineAsync(CalculatorView.INPUT_PREFIX);
-    if (input.trim() === "") return "0";
     return input;
   }
 
